@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: hml
+  mvc:
+    static-path-pattern: /image/**
+  resources:
+    static-locations: file:C:\Users\11416\Desktop\project_03\
+server:
+  port: 8080

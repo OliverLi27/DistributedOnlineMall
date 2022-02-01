@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.shopping.dal.persistence.ItemDetailMapper">
+    <resultMap id="BaseResultMap" type="com.mall.shopping.dal.entitys.ItemDetail">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="limit_num" jdbcType="INTEGER" property="limitNum" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="image" jdbcType="VARCHAR" property="image" />
+        <result column="sell_point" jdbcType="VARCHAR" property="sellPoint" />
+        <association property="detail" column="id" select="com.mall.shopping.dal.persistence.ItemDetailMapper.selectItemDesc"/>
+    </resultMap>
+
+
+    <select id="selectProductDetail" resultMap="BaseResultMap">
+        select id,limit_num,title,price,image,sell_point from tb_item where id = #{id}
+    </select>
+
+    <select id="selectItemDesc" resultType="string">
+        select item_desc from tb_item_desc where item_id = #{id}
+    </select>
+
+
+</mapper>

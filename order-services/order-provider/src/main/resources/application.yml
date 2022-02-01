@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: hml
+mybatis:
+  mapper-locations: classpath*:com/mall/order/dal/persistence/*Mapper.xml"
+  type-aliases-package: com.mall.order.dal.entitys
+
+

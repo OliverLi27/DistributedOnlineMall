@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.shopping.dal.persistence.PanelMapper">
+  <resultMap id="BaseResultMap" type="com.mall.shopping.dal.entitys.Panel">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
+    <result column="position" jdbcType="INTEGER" property="position" />
+    <result column="limit_num" jdbcType="INTEGER" property="limitNum" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, sort_order, position, limit_num, status, remark, created, updated
+  </sql>
+  <select id="selectPanelContentById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.*,b.product_id
+from tb_panel a inner join tb_panel_content b on a.id=b.panel_id where a.id=#{panelId} and status=1
+  </select>
+
+  <select id="selectRecommendProduct" resultMap="BaseResultMap">
+    select id,limit_num,`name`,`position`,remark,sort_order,`status`,`type` from tb_panel where `position` = 1;
+  </select>
+
+  <resultMap id="selectPanelContentMap" type="com.mall.shopping.dal.entitys.PanelContentItem">
+    <result property="id" column="id"/>
+    <result property="panelId" column="panel_id"/>
+    <result property="type" column="type"/>
+    <result property="productId" column="product_id"/>
+    <result property="sortOrder" column="sort_order"/>
+    <result property="fullUrl" column="full_url"/>
+    <result property="picUrl" column="pic_url"/>
+    <result property="picUrl2" column="pic_url2"/>
+    <result property="picUrl3" column="pic_url3"/>
+    <result property="created" column="created"/>
+    <result property="updated" column="updated"/>
+    <result property="productName" column="title"/>
+    <result property="salePrice" column="price"/>
+    <result property="subTitle" column="sell_point"/>
+  </resultMap>
+  <select id="selectPanelContent" resultMap="selectPanelContentMap">
+    select a.id,a.panel_id,a.type,a.product_id,a.sort_order,a.full_url,a.pic_url,a.pic_url2,a.pic_url3,a.created,a.updated,b.title,b.price,b.sell_point from tb_panel_content a inner join tb_item b  on a.product_id = b.id where panel_id = #{id} and b.status = 1;
+  </select>
+</mapper>
